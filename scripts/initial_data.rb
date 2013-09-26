@@ -11,18 +11,14 @@ FILES = [
   GRAPH_FILE,
 ]
 
-
 FILES.each do |file|
   array = Array.new
   path,name = file[0],file[1]
-
   name = File.expand_path( "../data/#{name}.msgpack" )
 
-  CSV.foreach( path ) do |raw|
-    array << raw
-  end
-
+  CSV.foreach( path ) { |raw| array << raw }
   packed = array.to_msgpack
+
   File.open( name, 'wb' ) do |file|
     file.write packed
   end
