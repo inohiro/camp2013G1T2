@@ -1,15 +1,14 @@
 # coding: utf-8
 
-GRAPH_FILE = File.expand_path( "./graph.csv" )
-USERS_FILE = File.expand_path( "./users.csv" )
+require File.expand_path( './../lib/loader.rb' )
 
 hash = Hash.new
 inv_hash = Hash.new
 
-require 'pp'
-require 'csv'
+PACKED_GRAPH_FILE = 'graph.msgpack'
+graph = Lib::Loader.new( PACKED_GRAPH_FILE ).unpack
 
-CSV.foreach( GRAPH_FILE ) do |raw|
+graph.each do |raw|
   src,dst = raw[0],raw[1]
   if hash.key? src
     hash[src] << dst.to_i

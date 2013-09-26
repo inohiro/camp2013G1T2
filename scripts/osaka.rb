@@ -1,10 +1,12 @@
 # coding: utf-8
 
-require 'pp'
-require 'csv'
+require File.expand_path( './../lib/loader.rb' )
 
-USERS_FILE = File.expand_path( "./users.csv" )
-GRAPH_FILE = File.expand_path( "./graph.csv" )
+PACKED_USERS_FILE = 'users.msgpack'
+PACKED_GRAPH_FILE = 'graph.msgpack'
+
+graph = Lib::Loader.new( PACKED_GRAPH_FILE ).unpack
+users = Lib::Loader.new( PACKED_USERS_FILE ).unpack
 
 OSAKA = 0
 TOKYO = 1
@@ -14,14 +16,14 @@ osaka_ids = []
 osaka = {}
 dict = {}
 
-CSV.foreach( USERS_FILE ) do |raw|
+users.each do |raw|
   user_id,location_id = raw[0].to_i,raw[1].to_i
   dict.store( user_id, location_id )
   # osaka.store( user_id, [] ) if location_id == OSAKA
   osaka.store( user_id, [] ) if location_id == TOKYO
 end
 
-CSV.foreach( GRAPH_FILE ) do |raw|
+graph.each do |raw|
   src,dst = raw[0].to_i,raw[1].to_i
 
   ### if src.location == OSAKA then store

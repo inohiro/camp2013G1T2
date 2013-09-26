@@ -1,13 +1,13 @@
 # coding: utf-8
 
-USERS_FILE = File.expand_path( "./users.csv" )
+require File.expand_path( './../lib/loader.rb' )
+
+PACKED_USERS_FILE = 'users.msgpack'
+users = Lib::Loader.new( PACKED_USERS_FILE ).unpack
 
 hash = Hash.new
 
-require 'pp'
-require 'csv'
-
-CSV.foreach( USERS_FILE ) do |raw|
+users.each do |raw|
   user,location = raw[0],raw[1]
   if hash.key? location
     hash[location] << user.to_i
