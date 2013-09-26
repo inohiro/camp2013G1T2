@@ -1,10 +1,9 @@
 # coding: utf-8
 
-require 'csv'
-require 'msgpack'
+require File.expand_path( './../lib/data_initializer.rb' )
 
-USERS_FILE = [ File.expand_path( "../data/users.csv" ), 'users' ]
-GRAPH_FILE = [ File.expand_path( "../data/graph.csv" ), 'graph' ]
+USERS_FILE = { csv: 'users.csv', output: 'users.msgpack' }
+GRAPH_FILE = { csv: 'graph.csv', output: 'graph.msgpack' }
 
 FILES = [
   USERS_FILE,
@@ -12,15 +11,6 @@ FILES = [
 ]
 
 FILES.each do |file|
-  array = Array.new
-  path,name = file[0],file[1]
-  name = File.expand_path( "../data/#{name}.msgpack" )
-
-  CSV.foreach( path ) { |raw| array << raw }
-  packed = array.to_msgpack
-
-  File.open( name, 'wb' ) do |file|
-    file.write packed
-  end
+  initializer = Lib::DataInitializer.new( file[:csv], file[:output] )
+  initializer.pack
 end
-
