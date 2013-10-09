@@ -2,6 +2,8 @@
 
 require 'csv'
 
+UNKNOWN = -1
+DEFAULT_UNKNOWN = 14572 # 66
 CORRECT_CSV = File.expand_path( "./../../data/fixed_user.csv" )
 TARGET_CSV  = File.expand_path( "./../66_result.csv" )
 
@@ -33,7 +35,6 @@ puts "Precision: #{precision_score}"
 
 # recall
 
-DEFAULT_UNKNOWN = 7305
 unknown_count = DEFAULT_UNKNOWN - target.count { |user_id, location_id| target[user_id] == UNKNOWN }
 recall_score = unknown_count.to_f / DEFAULT_UNKNOWN.to_f
 
