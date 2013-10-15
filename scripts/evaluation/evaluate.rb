@@ -5,7 +5,7 @@ require 'csv'
 UNKNOWN = -1
 DEFAULT_UNKNOWN = 14572 # 66
 CORRECT_CSV = File.expand_path( "./../../data/fixed_user.csv" )
-TARGET_CSV  = File.expand_path( "./../66_result.csv" )
+File.expand_path( "./../66_result.csv" )
 
 def store_into_hash( csv )
   hash = {}
@@ -35,7 +35,7 @@ puts "Precision: #{precision_score}"
 
 # recall
 
-unknown_count = DEFAULT_UNKNOWN - target.count { |user_id, location_id| target[user_id] == UNKNOWN }
+unknown_count = DEFAULT_UNKNOWN - target.count { |user_id, location_id| location_id.to_i == UNKNOWN }
 recall_score = unknown_count.to_f / DEFAULT_UNKNOWN.to_f
 
 puts "Recall: #{recall_score}"
