@@ -5,7 +5,7 @@ require 'csv'
 UNKNOWN = -1
 DEFAULT_UNKNOWN = 14572 # 66
 CORRECT_CSV = File.expand_path( "./../../data/fixed_user.csv" )
-File.expand_path( "./../66_result.csv" )
+TARGET_CSV = File.expand_path( "./../66_result.csv" )
 
 def store_into_hash( csv )
   hash = {}
